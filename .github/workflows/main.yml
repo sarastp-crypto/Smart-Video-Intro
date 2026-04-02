@@ -1,0 +1,25 @@
+name: Run AI Editor
+on: [push] # Runs when you upload files
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install System Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          
+      - name: Install Python Tools
+        run: pip install -r requirements.txt
+          
+      - name: Run Editor
+        run: python edit_video.py
+
+      - name: Save My Video
+        uses: actions/upload-artifact@v4
+        with:
+          name: My-Edited-Video
+          path: final_output.mp4
